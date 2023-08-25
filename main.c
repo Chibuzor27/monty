@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string.h>
-#include "main.h"
+#include "monty.h"
 
 void interpret(stack_t **stack, char *line, int ln);
 

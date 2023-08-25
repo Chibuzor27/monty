@@ -1,6 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
-#include "main.h"
+#include "monty.h"
 
 /**
  * _pall - function to print stack

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
+#include "monty.h"
 
 void (*get_op(char *op))(stack_t **, unsigned int)
 {

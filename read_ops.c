@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
+#include "monty.h"
 
 ops_t *add_op(ops_t **head, char *text, int n);
 void create_op(char *word, int, ops_t **, ops_t **);

@@ -1,7 +1,7 @@
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
-#include "main.h"
+#include "monty.h"
 
 /**
  * _add - function to add top two elements in stack
