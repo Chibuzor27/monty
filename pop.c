@@ -16,7 +16,10 @@ void _pop(stack_t **stack, unsigned int line_number)
 	{
 		node = *stack;
 		*stack = (*stack)->next;
-		(*stack)->prev = NULL;
+		if (*stack != NULL)
+		{
+			(*stack)->prev = NULL;
+		}
 		dprintf(0, "%d\n", (node)->n);
 		free(node);
 	}
