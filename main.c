@@ -21,8 +21,12 @@ int main(void)
 	int ln = 0;
 	stack_t *stack = NULL;
 
-	while ((n = getline(&line, &len, stdin)) != 0)
+	while ((n = getline(&line, &len, stdin)) > -1)
 	{
+		if (n == 0)
+			break;
+		if (n == 1 && strcmp(line, "\n") == 0)
+			continue;
 		ln++;
 		line[n - 1] = '\0';
 		interpret(&stack, line, ln);
@@ -46,8 +50,7 @@ void interpret(stack_t **stack, char *line, int ln)
 	ops = read_ops(line, ln);
 	if (ops == NULL)
 	{
-		dprintf(2, "Error\n");
-		exit(EXIT_FAILURE);
+		return;
 	}
 
 	while (ops != NULL)
