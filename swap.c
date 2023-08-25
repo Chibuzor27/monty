@@ -18,7 +18,10 @@ void _swap(stack_t **stack, unsigned int line_number)
 		node = *stack;
 		next = (*stack)->next;
 
-		next->next->prev = node;
+		if (next->next != NULL)
+		{
+			next->next->prev = node;
+		}
 		node->next = next->next;
 		next->prev = NULL;
 		next->next = node;
