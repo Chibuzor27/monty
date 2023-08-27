@@ -1,4 +1,3 @@
-#define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
 #include <stdlib.h>
 #include "monty.h"
@@ -12,11 +11,14 @@ void _pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack != NULL)
 	{
-		dprintf(0, "%d\n", (*stack)->n);
+		_putn(0, (*stack)->n);
+		_puts(0, "\n");
 	}
 	else
 	{
-		dprintf(2, "L%d: can't pint, stack empty\n", line_number);
+		_puts(2, "L");
+		_putn(2, line_number);
+		_puts(2, ": can't pint, stack empty\n");
 		exit(EXIT_FAILURE);
 	}
 }

@@ -4,6 +4,11 @@
 #include <string.h>
 #include "monty.h"
 
+/**
+ * get_op - function
+ * @op: the operation code
+ * Return: function
+ */
 void (*get_op(char *op))(stack_t **, unsigned int)
 {
 	instruction_t ops[] = {
