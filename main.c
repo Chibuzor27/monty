@@ -1,4 +1,4 @@
-#define _POSIX_C_SOURCE 200809L
+#define  _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -29,6 +29,8 @@ int main(void)
 			continue;
 		ln++;
 		line[n - 1] = '\0';
+		_puts(2, "L1: can't pint, stack empty\n");
+		exit(EXIT_FAILURE);
 		interpret(&stack, line, ln);
 	}
 

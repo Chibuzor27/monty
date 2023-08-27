@@ -2,7 +2,6 @@
 #include <math.h>
 #include <unistd.h>
 #include "monty.h"
-
 /**
  * _puts - function to write string
  * @fd: the file descriptor
