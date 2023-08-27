@@ -7,9 +7,10 @@
 /**
  * get_op - function
  * @op: the operation code
+ * @ln: line number
  * Return: function
  */
-void (*get_op(char *op))(stack_t **, unsigned int)
+void (*get_op(char *op, unsigned int ln))(stack_t **, unsigned int)
 {
 	instruction_t ops[] = {
 		{"pop", _pop},
@@ -31,6 +32,6 @@ void (*get_op(char *op))(stack_t **, unsigned int)
 		i++;
 	}
 
-	dprintf(2, "Operation is not recognized\n");
+	dprintf(2, "L%d: unknown instruction %s\n", ln, op);
 	exit(EXIT_FAILURE);
 }

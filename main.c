@@ -6,33 +6,26 @@
 #include <string.h>
 #include "monty.h"
 
-void interpret(stack_t **stack, char *line, int ln);
+void interpret(stack_t **stack, char *, int);
 
 /**
  * main - entry point
+ * @ac: arg count
+ * @av: arg list
  *
  * Return: 0
  */
-int main(void)
+int main(int ac, char **av)
 {
-	char *line;
-	size_t len = 0;
-	ssize_t n;
-	int ln = 0;
 	stack_t *stack = NULL;
 
-	while ((n = getline(&line, &len, stdin)) > -1)
+	if (ac != 2)
 	{
-		if (n == 0)
-			break;
-		if (n == 1 && strcmp(line, "\n") == 0)
-			continue;
-		ln++;
-		line[n - 1] = '\0';
-		_puts(2, "L1: can't pint, stack empty\n");
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
-		interpret(&stack, line, ln);
 	}
+
+	interpret(&stack, av[1], 1024);
 
 	return (0);
 }
@@ -40,16 +33,16 @@ int main(void)
 /**
  * interpret - function
  * @stack: arg
- * @line: arg
- * @ln: arg
+ * @filename: arg
+ * @limit: arg
  */
-void interpret(stack_t **stack, char *line, int ln)
+void interpret(stack_t **stack, char *filename, int limit)
 {
 	ops_t *node;
 	ops_t *next;
 	ops_t *ops;
 
-	ops = read_ops(line, ln);
+	ops = readfile(filename, limit);
 	if (ops == NULL)
 	{
 		return;
@@ -62,21 +55,23 @@ void interpret(stack_t **stack, char *line, int ln)
 			next = ops->next;
 			if (next == NULL)
 			{
-				push(stack, NULL, ln);
+				push(stack, NULL, ops->line_number);
 			}
 			else
 			{
-				push(stack, next->opcode, ln);
+				push(stack, next->opcode, ops->line_number);
 				ops->next = next->next;
+				next->next = NULL;
 				free(next);
 			}
 		}
 		else
 		{
-			(get_op(ops->opcode))(stack, ln);
+			(get_op(ops->opcode, ops->line_number))(stack, ops->line_number);
 		}
 		node = ops;
 		ops = ops->next;
+		node->next = NULL;
 		free(node);
 	}
 }

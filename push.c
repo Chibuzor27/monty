@@ -38,7 +38,12 @@ void push(stack_t **stack, char *strn, unsigned int line_number)
 	}
 
 	node = malloc(sizeof(stack_t));
-	if (node != NULL)
+	if (node == NULL)
+	{
+		dprintf(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	else
 	{
 		node->n = n;
 

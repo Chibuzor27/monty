@@ -52,10 +52,12 @@ void _pop(stack_t **stack, unsigned int line_number);
 void _swap(stack_t **stack, unsigned int line_number);
 void _add(stack_t **stack, unsigned int line_number);
 void _nop(stack_t **stack, unsigned int line_number);
-void (*get_op(char *op))(stack_t **, unsigned int);
-ops_t *read_ops(char *line, int n);
+void (*get_op(char *op, unsigned int))(stack_t **, unsigned int);
+ops_t *read_ops(char *line, int *n, ops_t **, ops_t **);
 int _puts(int fd, char *s);
 int _putchar(int fd, char c);
 int _putn(int fd, unsigned int n);
+ops_t *read_textfile(const char *, size_t);
+ops_t *readfile(char *filename, size_t limit);
 
 #endif
