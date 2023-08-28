@@ -23,7 +23,7 @@ int _mul(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		dprintf(2, "L%d: can't add, stack too short\n", line_number);
+		dprintf(2, "L%d: can't mul, stack too short\n", line_number);
 		return (-1);
 	}
 	return (0);
