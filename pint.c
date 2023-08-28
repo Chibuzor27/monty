@@ -12,8 +12,7 @@ int _pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack != NULL)
 	{
-		_putn(0, (*stack)->n);
-		_puts(0, "\n");
+		printf("%d\n", (*stack)->n);
 	}
 	else
 	{

@@ -1,5 +1,7 @@
-push 142  pop push 4 #push 1 push 402
-push 0 
-pall
-#mod
+push 1
+pint
+push 2
+pint
+push 3
+pint
 pall
