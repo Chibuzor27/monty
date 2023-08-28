@@ -27,7 +27,7 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
+	int (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
@@ -44,20 +44,25 @@ typedef struct ops_s
 
 int _isdigit(char *text);
 int _atoi(char *str);
-void push(stack_t **stack, char *, unsigned int line_number);
+int push(stack_t **stack, char *, unsigned int line_number);
 void _push(stack_t **stack, unsigned int line_number);
-void _pall(stack_t **stack, unsigned int line_number);
-void _pint(stack_t **stack, unsigned int line_number);
-void _pop(stack_t **stack, unsigned int line_number);
-void _swap(stack_t **stack, unsigned int line_number);
-void _add(stack_t **stack, unsigned int line_number);
-void _nop(stack_t **stack, unsigned int line_number);
+int _pall(stack_t **stack, unsigned int line_number);
+int _pint(stack_t **stack, unsigned int line_number);
+int _pop(stack_t **stack, unsigned int line_number);
+int _swap(stack_t **stack, unsigned int line_number);
+int _add(stack_t **stack, unsigned int line_number);
+int _nop(stack_t **stack, unsigned int line_number);
+/*
 void (*get_op(char *op, unsigned int))(stack_t **, unsigned int);
+*/
+int (*get_op(char *op, unsigned int ln))(stack_t **, unsigned int);
 ops_t *read_ops(char *line, int *n, ops_t **, ops_t **);
 int _puts(int fd, char *s);
 int _putchar(int fd, char c);
 int _putn(int fd, unsigned int n);
 ops_t *read_textfile(const char *, size_t);
 ops_t *readfile(char *filename, size_t limit);
+void free_stack(stack_t **stack);
+void free_ops(ops_t **ops);
 
 #endif

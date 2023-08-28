@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 200809L
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 #include "monty.h"
 
@@ -25,8 +26,9 @@ void _push(stack_t **stack, unsigned int line_number)
  * @stack: arg
  * @strn: arg
  * @line_number: arg
+ * Return: int
  */
-void push(stack_t **stack, char *strn, unsigned int line_number)
+int push(stack_t **stack, char *strn, unsigned int line_number)
 {
 	stack_t *node = NULL;
 	int n = _atoi(strn);
@@ -34,17 +36,18 @@ void push(stack_t **stack, char *strn, unsigned int line_number)
 	if (strn == NULL || n == -1)
 	{
 		dprintf(2, "L%d: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 
 	node = malloc(sizeof(stack_t));
 	if (node == NULL)
 	{
 		dprintf(2, "Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	else
 	{
+		memset(node, 0, sizeof(stack_t));
 		node->n = n;
 
 		if (*stack == NULL)
@@ -58,4 +61,5 @@ void push(stack_t **stack, char *strn, unsigned int line_number)
 			*stack = node;
 		}
 	}
+	return (0);
 }

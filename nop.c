@@ -7,11 +7,14 @@
  * _nop - function to pop stack
  * @stack: stack
  * @line_number: arg
+ * Return: 0
  */
-void _nop(stack_t **stack, unsigned int line_number)
+int _nop(stack_t **stack, unsigned int line_number)
 {
 	if (stack != NULL && line_number > 0)
 	{
-		return;
+		return (0);
 	}
+
+	return (0);
 }

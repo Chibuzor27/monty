@@ -10,7 +10,7 @@
  * @ln: line number
  * Return: function
  */
-void (*get_op(char *op, unsigned int ln))(stack_t **, unsigned int)
+int (*get_op(char *op, unsigned int ln))(stack_t **, unsigned int)
 {
 	instruction_t ops[] = {
 		{"pop", _pop},
@@ -33,5 +33,5 @@ void (*get_op(char *op, unsigned int ln))(stack_t **, unsigned int)
 	}
 
 	dprintf(2, "L%d: unknown instruction %s\n", ln, op);
-	exit(EXIT_FAILURE);
+	return (NULL);
 }

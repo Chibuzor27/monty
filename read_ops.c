@@ -20,7 +20,7 @@ ops_t *readfile(char *filename, size_t limit)
 	int ln = 1;
 	ops_t *ops = NULL;
 	ops_t *last = NULL;
-	char *text;
+	char *text = NULL;
 
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
@@ -32,11 +32,19 @@ ops_t *readfile(char *filename, size_t limit)
 	}
 
 	text = malloc((sizeof(char) * limit) + 1);
+	if (text == NULL)
+	{
+		_puts(2, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
+	}
+	memset(text, 0, (sizeof(char) * limit) + 1);
 
 	while ((n = read(fd, text, sizeof(char) * limit)) > 0)
 	{
-		ops = read_ops(text, &ln, &ops, &last);
+		read_ops(text, &ln, &ops, &last);
 	}
+	close(fd);
+	free(text);
 	return (ops);
 }
 
@@ -51,7 +59,7 @@ ops_t *readfile(char *filename, size_t limit)
 ops_t *read_ops(char *line, int *n, ops_t **ops, ops_t **last)
 {
 	int wc = 0;
-	char word[6];
+	char word[6] = {0};
 	int i = 0;
 
 	if (line == NULL)
@@ -103,18 +111,24 @@ ops_t *read_ops(char *line, int *n, ops_t **ops, ops_t **last)
  */
 void create_op(char *word, int n, ops_t **head, ops_t **last)
 {
-	ops_t *node = malloc(sizeof(ops_t));
+	ops_t *node = NULL;
 
+	node = malloc(sizeof(ops_t));
+	memset(node, 0, sizeof(ops_t));
 	if (node == NULL)
 	{
-		_puts(2, "Error: malloc failed");
+		_puts(2, "Error: malloc failed\n");
 		exit(EXIT_FAILURE);
 	}
 	else
 	{
-		node->opcode = malloc(sizeof(char) * strlen(word));
+		node->opcode = malloc((sizeof(char) * strlen(word)) + 1);
 		if (node->opcode == NULL)
-			return;
+		{
+			_puts(2, "Error: malloc failed\n");
+			exit(EXIT_FAILURE);
+		}
+		memset(node->opcode, 0, (sizeof(char) * strlen(word)) + 1);
 		strcpy(node->opcode, word);
 		node->line_number = n;
 

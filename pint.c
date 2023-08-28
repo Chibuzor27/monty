@@ -6,8 +6,9 @@
  * _pint - function to peek top of stack
  * @stack: stack
  * @line_number: arg
+ * Return: int
  */
-void _pint(stack_t **stack, unsigned int line_number)
+int _pint(stack_t **stack, unsigned int line_number)
 {
 	if (*stack != NULL)
 	{
@@ -19,6 +20,7 @@ void _pint(stack_t **stack, unsigned int line_number)
 		_puts(2, "L");
 		_putn(2, line_number);
 		_puts(2, ": can't pint, stack empty\n");
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
+	return (0);
 }

@@ -7,8 +7,9 @@
  * _pop - function to pop stack
  * @stack: stack
  * @line_number: arg
+ * Return: int
  */
-void _pop(stack_t **stack, unsigned int line_number)
+int _pop(stack_t **stack, unsigned int line_number)
 {
 	stack_t *node = NULL;
 
@@ -27,6 +28,7 @@ void _pop(stack_t **stack, unsigned int line_number)
 	else
 	{
 		dprintf(2, "L%d: can't pop an empty stack\n", line_number);
-		exit(EXIT_FAILURE);
+		return  (-1);
 	}
+	return (0);
 }

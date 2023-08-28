@@ -25,7 +25,11 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 
-	interpret(&stack, av[1], 1024);
+	if (av != NULL && av[1] != NULL)
+	{
+		interpret(&stack, av[1], 1024);
+	}
+	free_stack(&stack);
 
 	return (0);
 }
@@ -41,6 +45,8 @@ void interpret(stack_t **stack, char *filename, int limit)
 	ops_t *node;
 	ops_t *next;
 	ops_t *ops;
+	int (*op)(stack_t **, unsigned int);
+	int res = 0;
 
 	ops = readfile(filename, limit);
 	if (ops == NULL)
@@ -62,16 +68,31 @@ void interpret(stack_t **stack, char *filename, int limit)
 				push(stack, next->opcode, ops->line_number);
 				ops->next = next->next;
 				next->next = NULL;
+				free(next->opcode);
 				free(next);
 			}
 		}
 		else
 		{
-			(get_op(ops->opcode, ops->line_number))(stack, ops->line_number);
+			op = get_op(ops->opcode, ops->line_number);
+			if (op == NULL)
+			{
+				free_ops(&ops);
+				free_stack(stack);
+				exit(EXIT_FAILURE);
+			}
+			res = op(stack, ops->line_number);
+			if (res == -1)
+			{
+				free_ops(&ops);
+				free_stack(stack);
+				exit(EXIT_FAILURE);
+			}
 		}
 		node = ops;
 		ops = ops->next;
 		node->next = NULL;
+		free(node->opcode);
 		free(node);
 	}
 }
