@@ -59,7 +59,7 @@ ops_t *readfile(char *filename, size_t limit)
 ops_t *read_ops(char *line, int *n, ops_t **ops, ops_t **last)
 {
 	int wc = 0;
-	char word[6] = {0};
+	char word[30] = {0};
 	int i = 0;
 
 	if (line == NULL)
