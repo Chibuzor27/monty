@@ -22,7 +22,7 @@ int _pop(stack_t **stack, unsigned int line_number)
 		{
 			(*stack)->prev = NULL;
 		}
-		dprintf(0, "%d\n", (node)->n);
+		printf("%d\n", (node)->n);
 		free(node);
 	}
 	else
