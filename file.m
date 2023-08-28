@@ -1,12 +1,5 @@
-push 1 push 2
+push 142  pop push 4 #push 1 push 402
+push 0 
 pall
-pop
-pint
-push 3
-push 5
-add
- 
-
-add
-nop
+#mod
 pall

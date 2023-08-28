@@ -42,51 +42,55 @@ int main(int ac, char **av)
  */
 void interpret(stack_t **stack, char *filename, int limit)
 {
-	ops_t *node;
-	ops_t *next;
-	ops_t *ops;
+	ops_t *node, *next, *ops;
+	int skip = -1;
 	int (*op)(stack_t **, unsigned int);
 	int res = 0;
 
 	ops = readfile(filename, limit);
 	if (ops == NULL)
-	{
 		return;
-	}
 
 	while (ops != NULL)
 	{
-		if (strcmp(ops->opcode, "push") == 0)
+		if (skip != -1 && ops->line_number != skip)
+			skip = -1;
+		if (skip == -1 && ops->opcode[0] == '#')
+			skip = ops->line_number;
+		if (skip == -1)
 		{
-			next = ops->next;
-			if (next == NULL)
+			if (strcmp(ops->opcode, "push") == 0)
 			{
-				push(stack, NULL, ops->line_number);
+				next = ops->next;
+				if (next == NULL)
+				{
+					push(stack, NULL, ops->line_number);
+				}
+				else
+				{
+					push(stack, next->opcode, ops->line_number);
+					ops->next = next->next;
+					next->next = NULL;
+					free(next->opcode);
+					free(next);
+				}
 			}
 			else
 			{
-				push(stack, next->opcode, ops->line_number);
-				ops->next = next->next;
-				next->next = NULL;
-				free(next->opcode);
-				free(next);
-			}
-		}
-		else
-		{
-			op = get_op(ops->opcode, ops->line_number);
-			if (op == NULL)
-			{
-				free_ops(&ops);
-				free_stack(stack);
-				exit(EXIT_FAILURE);
-			}
-			res = op(stack, ops->line_number);
-			if (res == -1)
-			{
-				free_ops(&ops);
-				free_stack(stack);
-				exit(EXIT_FAILURE);
+				op = get_op(ops->opcode, ops->line_number);
+				if (op == NULL)
+				{
+					free_ops(&ops);
+					free_stack(stack);
+					exit(EXIT_FAILURE);
+				}
+				res = op(stack, ops->line_number);
+				if (res == -1)
+				{
+					free_ops(&ops);
+					free_stack(stack);
+					exit(EXIT_FAILURE);
+				}
 			}
 		}
 		node = ops;

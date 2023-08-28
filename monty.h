@@ -51,6 +51,10 @@ int _pint(stack_t **stack, unsigned int line_number);
 int _pop(stack_t **stack, unsigned int line_number);
 int _swap(stack_t **stack, unsigned int line_number);
 int _add(stack_t **stack, unsigned int line_number);
+int _sub(stack_t **stack, unsigned int line_number);
+int _div(stack_t **stack, unsigned int line_number);
+int _mul(stack_t **stack, unsigned int line_number);
+int _mod(stack_t **stack, unsigned int line_number);
 int _nop(stack_t **stack, unsigned int line_number);
 /*
 void (*get_op(char *op, unsigned int))(stack_t **, unsigned int);
